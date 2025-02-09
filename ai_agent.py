@@ -1,4 +1,3 @@
-# Setup API keys for GROQ, Tavily, and NASA
 from dotenv import load_dotenv
 import os
 
