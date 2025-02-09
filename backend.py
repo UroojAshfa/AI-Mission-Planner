@@ -27,7 +27,6 @@ def chat_endpoint(request: RequestState):
     if request.model_name not in ALLOWED_MODEL_NAMES:
         return {"Error!": "Invalid model name: kindly select a valid AI model"}
     
-    
     llm_id = request.model_name
     query = request.messages
     allow_search = request.allow_search
@@ -45,7 +44,7 @@ def chat_endpoint(request: RequestState):
         return response
     else:
         # Default AI agent response
-        response = get_response(llm_id, query, allow_search, system_prompt, provider, query_type)
+        response = get_response(llm_id, query, allow_search, system_prompt, provider)
         return response
 
 # Run app and explore Swagger UI Docs
