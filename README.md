@@ -1,4 +1,4 @@
-# 🚀 AI-Powered Space AI Agent
+# 🚀 AI-Powered Mission Planner Agent
 
 An intelligent space data assistant that simplifies access to space-related information, enhances citizen engagement, and provides real-time insights through AI-driven queries.
 
@@ -27,6 +27,10 @@ An intelligent space data assistant that simplifies access to space-related info
 
 - Retrieves and displays the **real-time location** of the ISS.
 - Provides latitude and longitude coordinates.
+
+## 🌍 Try It Live!
+
+🚀 **Experience the AI Mission Planner Agent now:** [Space Assistant App](https://spaceassistant.streamlit.app/)
 
 ## 🛠️ Installation & Setup
 
@@ -68,7 +72,9 @@ streamlit run app.py
 
 ## 🎯 Usage Guide
 
-1️⃣ **Open the Streamlit app** in your browser. 2️⃣ **Choose a query type** (General Space Info, APOD, or ISS Location). 3️⃣ **Enter text or use voice input** to ask a question. 4️⃣ **View results** including AI-generated responses, images, or ISS coordinates.
+1️⃣ **Open the Streamlit app** in your browser. 
+2️⃣ **Choose a query type** (General Space Info, APOD, or ISS Location).
+3️⃣  **View results** including AI-generated responses, images, or ISS coordinates.
 
 ## 🛠️ API Endpoints
 
@@ -78,7 +84,7 @@ streamlit run app.py
 
 - Speech recognition may require **a quiet environment** for best results.
 - APOD retrieval is limited by **NASA API availability**.
-- ISS tracking relies on **open-notify API** and may have occasional downtimes.
+
 
 ## 📜 License
 
