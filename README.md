@@ -1,4 +1,4 @@
-# 🚀 AI-Powered Mission Planner Agent
+# 🚀 AI-Powered Space AI Agent
 
 An intelligent space data assistant that simplifies access to space-related information, enhances citizen engagement, and provides real-time insights through AI-driven queries.
 
