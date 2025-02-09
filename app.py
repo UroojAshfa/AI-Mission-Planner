@@ -66,6 +66,7 @@ if st.button("Ask Agent!"):
             else:
                 st.error(f"Error: {response.json().get('detail', 'Failed to get a response from the agent.')}")
         except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
 
 
 # import streamlit as st
