@@ -1,56 +1,43 @@
 # Setup API keys for GROQ, Tavily, and NASA
+from dotenv import load_dotenv
 import os
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")
-NASA_API_KEY = os.environ.get("NASA_API_KEY")
+# Load environment variables from .env file
+load_dotenv()
 
-# Setup LLM and tools
+# Get API keys from the .env file
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+# Step2: Setup LLM & Tools
 from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
 from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain.tools import tool
 
-# Initialize LLMs
+openai_llm = ChatOpenAI(model="gpt-4o-mini")
 groq_llm = ChatGroq(model="llama-3.3-70b-versatile")
 
-system_prompt="You are an AI-powered mission planner agent that simplifies access to space-related data, provides educational tools, and fosters citizen engagement in space exploration."
+search_tool = TavilySearchResults(max_results=2)
 
-# Custom tools for space data
-@tool
-def get_nasa_apod(date: str):
-    """Fetch the Astronomy Picture of the Day (APOD) from NASA."""
-    import requests
-    url = f"https://api.nasa.gov/planetary/apod?date={date}&api_key={NASA_API_KEY}"
-    response = requests.get(url)
-    return response.json()
-
-@tool
-def get_iss_location():
-    """Fetch the current location of the International Space Station (ISS)."""
-    import requests
-    url = "http://api.open-notify.org/iss-now.json"
-    response = requests.get(url)
-    return response.json()
-
-# Setup AI agent with search tool functionality
+# Step3: Setup AI Agent with Search tool functionality
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages.ai import AIMessage
 
-def get_response(llm_id, query, allow_search, system_prompt, provider):
+system_prompt = "You are a Space Assistant, an AI expert in space research, astronomy, and space exploration. Your goal is to provide accurate, insightful, and engaging responses to questions about space, planets, missions, and the universe."
+
+def get_response_from_ai_agent(llm_id, query, allow_search, system_prompt, provider):
     if provider == "Groq":
         llm = ChatGroq(model=llm_id)
-    
-    # Include custom tools if search is allowed
-    tools = [TavilySearchResults(max_results=2), get_nasa_apod, get_iss_location] if allow_search else []
-    
-    # Create the agent
+    elif provider == "OpenAI":
+        llm = ChatOpenAI(model=llm_id)
+
+    tools = [TavilySearchResults(max_results=2)] if allow_search else []
     agent = create_react_agent(
         model=llm,
         tools=tools,
-        system_prompt=system_prompt
+        state_modifier=system_prompt
     )
-    
-    # Invoke the agent
     state = {"messages": query}
     response = agent.invoke(state)
     messages = response.get("messages")
